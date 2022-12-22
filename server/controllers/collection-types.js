@@ -40,8 +40,17 @@ module.exports = {
 
       let permissionQuery = permissionChecker.buildReadQuery(query);
       let permissionQueryl = permissionQuery;
+       console.log("relations");
+      console.log(ctx.state.user.relations);
 
-      if (authorIds) {
+      if (ctx.state.user.relations.length == 0) {
+        ctx.body = {
+          results: false,
+          pagination: false,
+        }
+      }
+
+      else if (authorIds) {
 
   
 
