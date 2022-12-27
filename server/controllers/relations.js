@@ -67,11 +67,19 @@ module.exports = {
 
     const field = prop(`metadatas.${targetField}.edit.mainField`, modelConfig) || 'id';
     const pickFields = [field, 'id', target.primaryKey, PUBLISHED_AT_ATTRIBUTE];
-    if (user.roles[0].name === 'Author') {
-      let filteredEntities = entities.filter(entity => entity.relationWithAuthorUser === user.id);
-      ctx.body = filteredEntities.map(pick(pickFields));
-    } else {
-      ctx.body = entities.map(pick(pickFields));
-    }
+     if (user.roles[0].name === "Author") {
+       let filteredEntities = entities.filter(
+         (entity) => entity.relationWithAuthorUser === user.id
+       );
+
+       if (ctx.params.targetField === "author") {
+         console.log("if");
+         ctx.body = filteredEntities.map(pick(pickFields));
+       } else {
+         ctx.body = entities.map(pick(pickFields));
+       }
+     } else {
+       ctx.body = entities.map(pick(pickFields));
+     }
   },
 };
